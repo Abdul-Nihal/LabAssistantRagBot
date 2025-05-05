@@ -33,7 +33,7 @@ if "last_message_id" not in st.session_state:
     st.session_state.last_message_id = None
 
 # ------------------ UI ------------------
-st.title("🤖 Lab Assistant Chat")
+st.title("🤖 Lab Assistant")
 
 # Fixed input file
 uploaded_file = "Cementing.pdf"
