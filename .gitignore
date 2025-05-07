@@ -2,4 +2,4 @@
 .venv
 .idea
 *.xml
-logs/*
+logs/
