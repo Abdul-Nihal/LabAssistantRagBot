@@ -45,8 +45,8 @@ class LabAssistant:
         thread = self.create_thread()
         content = extract_pdf_text(file_path)
         chunks = split_text(content)
-        for chunk in chunks:
-            self.add_message_to_thread(thread.id, chunk)
+        for i,chunk in enumerate(chunks):
+            self.add_message_to_thread(thread.id, f"Part {i} of context: {chunk}")
         return thread.id
 
     def upload_file(self, file_path):

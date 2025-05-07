@@ -68,7 +68,7 @@ if st.session_state.thread_id:
         with st.spinner("Assistant is thinking..."):
             try:
                 st.session_state.lab_assistant.add_message_to_thread(
-                    st.session_state.thread_id, user_input
+                    st.session_state.thread_id, "Based on all the context I’ve provided above, answer the following question: "+user_input
                 )
                 st.session_state.lab_assistant.run_thread(st.session_state.thread_id)
                 response, message_id = st.session_state.lab_assistant.get_run_output(st.session_state.thread_id)
