@@ -33,7 +33,7 @@ class LabAssistant:
                 name="Lab Assistant V1",
                 instructions=self.sys_prompt,
                 model=MODEL,
-                response_format=self.response_format
+                response_format=self.response_format,reasoning_effort="high"
             )
             logger.info(f"Created assistant: {assistant.id}")
             return assistant.id
@@ -85,7 +85,7 @@ class LabAssistant:
             return self.client.beta.threads.runs.create_and_poll(
                 thread_id=thread_id,
                 assistant_id=self.assistant_id,
-                response_format=self.response_format
+                response_format=self.response_format,reasoning_effort="high"
             )
         except Exception as e:
             logger.error(f"Failed to run thread {thread_id}: {e}")
