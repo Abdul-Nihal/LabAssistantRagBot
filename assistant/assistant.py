@@ -34,7 +34,6 @@ class LabAssistant:
                 instructions=self.sys_prompt,
                 model=MODEL,
                 response_format=self.response_format,
-                reasoning_effort="high",
                 temperature=0.3,
                 top_p=0.8
             )
@@ -88,7 +87,9 @@ class LabAssistant:
             return self.client.beta.threads.runs.create_and_poll(
                 thread_id=thread_id,
                 assistant_id=self.assistant_id,
-                response_format=self.response_format,reasoning_effort="high"
+                response_format=self.response_format,
+                temperature=0.3,
+                top_p=0.8
             )
         except Exception as e:
             logger.error(f"Failed to run thread {thread_id}: {e}")
