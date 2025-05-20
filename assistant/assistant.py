@@ -33,7 +33,10 @@ class LabAssistant:
                 name="Lab Assistant V1",
                 instructions=self.sys_prompt,
                 model=MODEL,
-                response_format=self.response_format,reasoning_effort="high"
+                response_format=self.response_format,
+                reasoning_effort="high",
+                temperature=0.3,
+                top_p=0.8
             )
             logger.info(f"Created assistant: {assistant.id}")
             return assistant.id
