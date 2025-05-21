@@ -10,7 +10,7 @@ from assistant.models import AssistantType
 from assistant.logger import logger
 from streamlit_feedback import streamlit_feedback
 
-st.set_page_config(page_title="🧪 Lab Assistant", layout="wide")
+st.set_page_config(page_title="AI Assistant", layout="wide")
 
 # ------------------ Session State Initialization ------------------
 if "lab_assistant" not in st.session_state:
@@ -51,7 +51,7 @@ with st.container():
 html = f"""
     <div style="display: flex; align-items: center;">
         <img src="data:image/png;base64,{encoded}" width="100" height="30" style="margin-right: 10px;" />
-        <h2 style="margin: 0;">Cementing Assistant</h2>
+        <h2 style="margin: 0;">AI Assistant</h2>
     </div>
 """
 
@@ -66,6 +66,19 @@ with col2:
     st.markdown("<div style='display: flex; justify-content: flex-end;'>", unsafe_allow_html=True)
     start_thread = st.button("💬 Start New Thread")
     st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown(
+    """
+    <div style='
+    margin-top: -30px;
+        color: #856404;
+        font-size: 0.9em;'>
+        ⚠️ This app is currently under development.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # Start New Thread Button
 if start_thread:
