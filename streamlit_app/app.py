@@ -65,7 +65,7 @@ uploaded_file = "Cementing.pdf"
 
 # Start New Thread Button
 if st.button("💬 Start New Thread"):
-    with st.spinner("Assitant is loading ..."):
+    with st.spinner("Assistant is loading ..."):
         try:
             st.session_state.thread_id = st.session_state.lab_assistant.load_or_create_thread(uploaded_file)
             st.session_state.chat_history = []
