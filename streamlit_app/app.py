@@ -30,7 +30,7 @@ if "last_response" not in st.session_state:
 
 if "last_message_id" not in st.session_state:
     st.session_state.last_message_id = None
-
+uploaded_file = "Cementing.pdf"
 # ------------------ UI ------------------
 
 st.markdown("""
@@ -45,7 +45,8 @@ st.markdown("""
 # Load and encode the image
 with open("logo.png", "rb") as image_file:
     encoded = base64.b64encode(image_file.read()).decode()
-
+with st.container():
+    col1, col2= st.columns([0.9,0.1])
 # Create HTML for inline image + title
 html = f"""
     <div style="display: flex; align-items: center;">
@@ -54,17 +55,20 @@ html = f"""
     </div>
 """
 
-
+with col1:
 # Render it
-st.markdown(html, unsafe_allow_html=True)
+    st.markdown(html, unsafe_allow_html=True)
 
 
 
 # Fixed input file
-uploaded_file = "Cementing.pdf"
+with col2:
+    st.markdown("<div style='display: flex; justify-content: flex-end;'>", unsafe_allow_html=True)
+    start_thread = st.button("💬 Start New Thread")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Start New Thread Button
-if st.button("💬 Start New Thread"):
+if start_thread:
     with st.spinner("Assistant is loading ..."):
         try:
             st.session_state.thread_id = st.session_state.lab_assistant.load_or_create_thread(uploaded_file)
