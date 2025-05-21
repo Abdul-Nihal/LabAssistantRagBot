@@ -1,3 +1,4 @@
+import base64
 import sys
 import os
 import streamlit as st
@@ -8,8 +9,6 @@ from assistant.assistant import LabAssistant
 from assistant.models import AssistantType
 from assistant.logger import logger
 from streamlit_feedback import streamlit_feedback
-
-
 
 st.set_page_config(page_title="🧪 Lab Assistant", layout="wide")
 
@@ -33,14 +32,40 @@ if "last_message_id" not in st.session_state:
     st.session_state.last_message_id = None
 
 # ------------------ UI ------------------
-st.title("🤖 Lab Assistant")
+
+st.markdown("""
+    <style>
+        [data-testid="stApp"] {
+            background-color: #e6f7ff;
+            padding: 20px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Load and encode the image
+with open("logo.png", "rb") as image_file:
+    encoded = base64.b64encode(image_file.read()).decode()
+
+# Create HTML for inline image + title
+html = f"""
+    <div style="display: flex; align-items: center;">
+        <img src="data:image/png;base64,{encoded}" width="100" height="30" style="margin-right: 10px;" />
+        <h2 style="margin: 0;">Lab Assistant</h2>
+    </div>
+"""
+
+
+# Render it
+st.markdown(html, unsafe_allow_html=True)
+
+
 
 # Fixed input file
 uploaded_file = "Cementing.pdf"
 
 # Start New Thread Button
-if st.button("📁 Start New Thread"):
-    with st.spinner("Creating assistant thread and loading file..."):
+if st.button("💬 Start New Thread"):
+    with st.spinner("Assitant is loading ..."):
         try:
             st.session_state.thread_id = st.session_state.lab_assistant.load_or_create_thread(uploaded_file)
             st.session_state.chat_history = []
@@ -53,8 +78,8 @@ if st.button("📁 Start New Thread"):
 
 # ------------------ Chat Section ------------------
 if st.session_state.thread_id:
-    st.markdown("---")
-    st.markdown("### 💬 Chat")
+    # st.markdown("---")
+    # st.markdown("### 💬 Chat")
 
     # Show chat history
     for user_msg, assistant_msg, msg_id in st.session_state.chat_history:
@@ -62,13 +87,14 @@ if st.session_state.thread_id:
         st.chat_message("assistant").markdown(assistant_msg)
 
     # Chat input from user
-    user_input = st.chat_input("Ask something about the cementing report...")
+    user_input = st.chat_input("Ask anything about the cementing procedures...")
     if user_input:
         st.chat_message("user").markdown(user_input)
         with st.spinner("Assistant is thinking..."):
             try:
                 st.session_state.lab_assistant.add_message_to_thread(
-                    st.session_state.thread_id, "Based on all the context I’ve provided above, answer the following question: "+user_input
+                    st.session_state.thread_id,
+                    "Based on all the context I’ve provided above, answer the following question: " + user_input
                 )
                 st.session_state.lab_assistant.run_thread(st.session_state.thread_id)
                 response, message_id = st.session_state.lab_assistant.get_run_output(st.session_state.thread_id)
@@ -108,7 +134,7 @@ if st.session_state.last_response and st.session_state.last_message_id:
 
         # Find the user/assistant message pair
         for user_msg, assistant_msg, msg_id in reversed(st.session_state.chat_history):
-            print(msg_id,st.session_state.last_message_id)
+            print(msg_id, st.session_state.last_message_id)
             if msg_id == st.session_state.last_message_id:
                 log_feedback(msg_id, entry, user_msg, assistant_msg)
                 break
