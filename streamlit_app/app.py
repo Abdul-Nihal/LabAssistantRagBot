@@ -50,7 +50,7 @@ with open("logo.png", "rb") as image_file:
 html = f"""
     <div style="display: flex; align-items: center;">
         <img src="data:image/png;base64,{encoded}" width="100" height="30" style="margin-right: 10px;" />
-        <h2 style="margin: 0;">Lab Assistant</h2>
+        <h2 style="margin: 0;">Cementing Assistant</h2>
     </div>
 """
 
